@@ -12,7 +12,7 @@ packages via `pip install -r requirements.txt`.
 * To search the earliest one-way flight from Seattle to Shanghai from 2020-07-26 to 2020-11-01,
 
 ```bash
-$ python main.py -c="/Users/wrn/Downloads/chromedriver" -u="https://www.google.com/flights?hl=en#flt=SEA./m/06wjf.{date};c:USD;e:1;s:1;sd:1;st:none;t:f;tt:o" -s=2020-07-26 -e=2020-11-01
+$ python main.py -c="/Users/wrn/Downloads/chromedriver" -u="https://www.google.com/flights?hl=en#flt=SEA./m/06wjf.{date};c:USD;e:1;s:1;sd:1;st:none;t:f;tt:o" -s=2020-07-26 -e=2020-11-01 -w=Wed,Sat
 ```
 
 * To get help info,

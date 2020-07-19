@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import date, datetime, timedelta
+from enum import IntEnum
 from selenium import webdriver
 from time import sleep
 
@@ -10,9 +11,30 @@ import beepy
 import sys
 
 
-def date_range(start_date, end_date):
+class WeekDay(IntEnum):
+    Mon = 0
+    Tue = 1
+    Wed = 2
+    Thu = 3
+    Fri = 4
+    Sat = 5
+    Sun = 6
+
+
+def get_desired_week_days(week_days_str):
+    if not week_days_str:
+        return None
+    return [WeekDay[week_day] for week_day in week_days_str.split(",")]
+
+
+def date_range(start_date, end_date, week_days):
     for n in range(int((end_date - start_date).days)):
-        yield start_date + timedelta(n)
+        curr_date = start_date + timedelta(n)
+        if week_days:
+            curr_week_day = curr_date.weekday()
+            if curr_week_day not in week_days:
+                continue
+        yield curr_date
 
 
 def print_flight_info(flight_list, curr_date):
@@ -61,6 +83,13 @@ def main():
         help="End date in the format of YYYY-MM-DD (included in search date range)"
     )
     parser.add_argument(
+        "-w",
+        "--week-days",
+        help="""Weekdays (i.e., Mon, Tue, Wed, Thu, Fri, Sat, Sun) of the desired dates separated by commas,
+        e.g., "Wed,Sat"
+        """
+    )
+    parser.add_argument(
         "-r",
         "--retry-interval",
         type=int,
@@ -75,10 +104,11 @@ def main():
 
     start_date = datetime.strptime(args.start_date, "%Y-%m-%d")
     end_date = datetime.strptime(args.end_date, "%Y-%m-%d")
+    week_days = get_desired_week_days(args.week_days)
     found_flights = False
     while True:
         try:
-            for curr_date in date_range(start_date, end_date):
+            for curr_date in date_range(start_date, end_date, week_days):
                 google_flights_url = args.google_flights_url.format(date=curr_date.strftime("%Y-%m-%d"))
                 print("Opening {}".format(google_flights_url))
                 driver.get(google_flights_url)
