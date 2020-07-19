@@ -9,10 +9,41 @@ packages via `pip install -r requirements.txt`.
 
 ## Sample usage
 
-* To search the earliest one-way flight from Seattle to Shanghai from 2020-07-26 to 2020-11-01,
+* To search the earliest one-way non-stop flight from Seattle to Shanghai from 2020-07-22 to 2021-04-01
+which satisfies the following conditions:
+  + on either Wednesday or Saturday;
+  + served by either United or Delta.
 
 ```bash
-$ python main.py -c="/Users/wrn/Downloads/chromedriver" -u="https://www.google.com/flights?hl=en#flt=SEA./m/06wjf.{date};c:USD;e:1;s:1;sd:1;st:none;t:f;tt:o" -s=2020-07-26 -e=2020-11-01 -w=Wed,Sat
+$ python main.py -c="/Users/wrn/Downloads/chromedriver" -u="https://www.google.com/flights?hl=en#flt=SEA./m/06wjf.{date};c:USD;e:1;s:0;sd:1;st:none;t:f;tt:o" -s=2020-07-22 -e=2021-04-01 -w=Wed,Sat -a=United,Delta
+```
+
+* To search the earliest one-way non-stop flight from San Francisco to Shanghai from 2020-07-22 to 2021-04-01
+which satisfies the following conditions:
+  + on Thursday;
+  + served by either Delta or United.
+
+```bash
+$ python main.py -c="/Users/wrn/Downloads/chromedriver" -u="https://www.google.com/flights?hl=en#flt=SFO./m/06wjf.{date};c:USD;e:1;s:0;sd:1;st:none;t:f;tt:o" -s=2020-07-22 -e=2021-04-01 -w=Thu -a=Delta,United
+```
+
+* To search the earliest one-way non-stop flight from Seattle to Shanghai from 2020-07-22 to 2021-04-01
+which satisfies the following conditions:
+  + on either Wednesday or Saturday;
+  + flight# = DL281.
+
+```bash
+$ python main.py -c="/Users/wrn/Downloads/chromedriver" -u="https://www.google.com/flights?hl=en#flt=SEA./m/06wjf.{date};c:USD;e:1;s:0;sd:1;st:none;t:f;tt:o" -s=2020-07-22 -e=2021-04-01 -w=Wed,Sat -f=DL281
+```
+
+
+* To search the earliest one-way non-stop flight from San Francisco to Shanghai from 2020-07-22 to 2021-04-01
+which satisfies the following conditions:
+  + on either Wednesday or Saturday;
+  + flight# = UA857.
+
+```bash
+$ python main.py -c="/Users/wrn/Downloads/chromedriver" -u="https://www.google.com/flights?hl=en#flt=SFO./m/06wjf.{date};c:USD;e:1;s:0;sd:1;st:none;t:f;tt:o" -s=2020-07-22 -e=2021-04-01 -w=Thu -f=UA857
 ```
 
 * To get help info,
